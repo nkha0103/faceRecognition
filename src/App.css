@@ -5,6 +5,7 @@
 .center {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .particles {
@@ -29,4 +30,16 @@
 
 .loading svg {
   width: 10%;
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding-bottom: 50px;
+  }
+
+  button {
+    max-width: 200px;
+    width: 100% !important;
+    display: block;
+  }
 }

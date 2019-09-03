@@ -6,3 +6,10 @@
     justify-content: center;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .absolute {
+        width: 100%;
+        padding: 10px;
+    }
+}

@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   cal = (data) => {
-    // console.log(data);
+    console.log(data);
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
@@ -86,6 +86,10 @@ class App extends Component {
   onGenerateImage = () => {
     this.setState({ isLoading: true });
     this.setState({ input: '' });
+    this.setState({ imageURL: '' });
+    this.setState({ box: {} });
+    const inputImg = document.getElementById('inputValue');
+    inputImg.value = '';
     fetch('https://loremflickr.com/500/480/face,portrait,people/all')
       .then((response) => {
         // console.log(response);
