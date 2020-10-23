@@ -56,7 +56,9 @@ class App extends Component {
 
   displayFaceBox = (box) => {
     console.log(box);
-    this.setState({ box: box });
+    this.setState({ box: box }, () => {
+      this.setState({ isLoading: false });
+    });
   }
 
   onInputChange = (event) => {
@@ -64,23 +66,24 @@ class App extends Component {
     this.setState({ input: event.target.value });
   }
 
-  onButtonSubmit = async () => {
+  onButtonSubmit = () => {
     this.setState({ isLoading: true });
     const inputImg = document.getElementById('inputValue');
     if (inputImg.value) {
-      await this.setState({ input: inputImg.value });
-      await this.setState({ imageURL: inputImg.value });
+      this.setState({ input: inputImg.value }, () => {
+        this.setState({ imageURL: inputImg.value });
+
+        app.models.predict(
+          Clarifai.FACE_DETECT_MODEL,
+          this.state.input)
+          .then(response => {
+            this.displayFaceBox(this.cal(response));
+          })
+          .catch(err => console.log(err));
+      });
     } else {
-      await this.setState({ imageURL: this.state.input });
+      this.setState({ imageURL: this.state.input });
     }
-    app.models.predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input)
-      .then(async response => {
-        await this.displayFaceBox(this.cal(response));
-        this.setState({ isLoading: false });
-      })
-      .catch(err => console.log(err));
   }
 
   onGenerateImage = () => {
